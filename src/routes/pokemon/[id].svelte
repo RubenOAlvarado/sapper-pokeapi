@@ -1,15 +1,5 @@
-<script context="module">
-    export async function preload(page, session){
-        const { id } = page.params;
-        const result = await this.fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-        const pokemon = await result.json();
-        
-        return {pokemon}
-    }
-</script>
-
-<script>
-    export let pokemon;
+<!--script>
+    
 </script>
 
 <style>
@@ -63,26 +53,29 @@
     }
 </style>
 
+{#await pokemon}
+		<div>Waiting...</div>
+{:then poke}
 <div class="card">
-    <span class="card--id">#{pokemon.id}</span>
-    <h1 class="card--name">{pokemon.name}</h1>
+    <span class="card--id">#{poke.id}</span>
+    <h1 class="card--name">{poke.name}</h1>
     <div>
-        <img class="card--image" src={pokemon.sprites.front_default} alt={pokemon.name} />
-        <img class="card--image" src={pokemon.sprites.back_default} alt={pokemon.name} />
+        <img class="card--image" src={poke.sprites.front_default} alt={poke.name} />
+        <img class="card--image" src={poke.sprites.back_default} alt={poke.name} />
     </div>
 
     <div>
         <h3 class="title">Details</h3>
-        <p class="card--details">Base experience: {pokemon.base_experience}</p>
-        <p class="card--details">Height: {pokemon.height}</p>
-        <p class="card--details">Weight: {pokemon.weight}</p>
+        <p class="card--details">Base experience: {poke.base_experience}</p>
+        <p class="card--details">Height: {poke.height}</p>
+        <p class="card--details">Weight: {poke.weight}</p>
     </div>
 
     <div>
         <h3 class="title">Types</h3>
         <span class="card--details">{
-            pokemon.types
-                .map(poke => poke.type.name)
+            poke.types
+                .map(p => p.type.name)
                 .join(', ')
             }</span>
     </div>
@@ -90,7 +83,10 @@
     <div>
         <h3 class="title">Abilities</h3>
         <span class="card--details">
-            {pokemon.abilities.map(ability => ability.ability.name).join(',')}
+            {poke.abilities.map(ability => ability.ability.name).join(',')}
         </span>
     </div>
 </div>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}<-->
