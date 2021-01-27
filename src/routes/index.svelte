@@ -12,7 +12,7 @@
 	<title>Sapper poke api</title>
 </svelte:head>
 
-<main class="tile">
+<main class="container">
 	<h1 class="title">Sapper Kanto Pokedex</h1>
 
 	{#await $response}
