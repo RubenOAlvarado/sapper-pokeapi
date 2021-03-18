@@ -1,11 +1,15 @@
-<script>
-	import Spinner from '../components/ui/Spinner.svelte';
-	import Grid from '../components/ui/Grid.svelte';
-	import { getData } from '../components/pokemon/pokemon.store';
-	import { BaseURL } from '../api.config';
+<script lang="ts">
+	import { flip } from 'svelte/animate';
+	import Card from '../components/Card.svelte';
+	import Grid from '../components/Grid.svelte';
+	let id:number = 1;
+	let len:number = 3;
+	let arr;
 
-	const response = getData(BaseURL.pokemons);
-	
+	$:{
+		arr = [...Array(len).keys()].map(x => id + x);
+	}
+
 </script>
 
 <svelte:head>
@@ -13,13 +17,12 @@
 </svelte:head>
 
 <main class="container">
-	<h1 class="title">Sapper Kanto Pokedex</h1>
-
-	{#await $response}
-		<Spinner message="Loading pokemons..." />
-	{:then pokemons}
-		<Grid {pokemons} />
-	{:catch error}
-		<p style="color: red">{error.message}</p>
-	{/await}
+	<h1>Kanto Pokedex</h1>
+	<Grid>
+		{#each arr as id (id) }
+			<div animate:flip={{duration:1000}}>
+				<Card idx={id} />
+			</div>
+		{/each}
+	</Grid>
 </main>
